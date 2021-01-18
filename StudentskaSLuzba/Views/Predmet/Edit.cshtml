@@ -1,0 +1,35 @@
+﻿@model DodajPredmetVM
+
+<form asp-action="Snimi" asp-controller="Predmet">
+
+    <div style="display:none">
+        <label>ID</label>
+        </br>
+        <input asp-for="predmetStudentID" />
+    </div>
+
+    <div>
+        <label> Predmeta</label>
+        </br>
+        <select asp-for="predmetID" asp-items="@Model.predmeti"></select>
+    </div>
+    <div>
+        <label>Ocjena</label>
+        </br>
+        <select asp-for="ocjenaID" asp-items="@Model.ocjene"></select>
+    </div>
+    <div>
+        <label>Student</label>
+        </br>
+        <select asp-for="studentID" asp-items="@Model.studenti"></select>
+    </div>
+    <div>
+        <label>Datum polaganja</label>
+        </br>
+        <input type="date" asp-for="Datum"/>
+    </div>
+
+
+    <input type="submit" value=" Snimi" />
+
+</form>

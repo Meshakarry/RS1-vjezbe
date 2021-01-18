@@ -1,0 +1,47 @@
+﻿@model DodajStudentaVM
+
+
+<form asp-action="Snimi" asp-controller="Student">
+
+    <div style="display:none">
+        <label>ID</label>
+        <br />
+        <input asp-for="studentID" />
+    </div>
+
+    <div>
+        <label>Ime</label>
+        <br />
+        <input asp-for="Ime" />
+    </div>
+    <div>
+        <label>PRezime</label>
+        <br />
+        <input asp-for="Prezime" />
+    </div>
+    <div>
+        <label>Broj indeksa</label>
+        <br />
+        <input asp-for="Br_Ind" />
+    </div>
+    <div>
+        <label>Fakultet</label>
+        <br />
+        <select asp-for="fakultetID" asp-items="@Model.fakulteti" ></select>
+    </div>
+
+    <div>
+        <label>Opstina</label>
+        <br />
+        <select asp-for="opstinaID" asp-items="@Model.opstine" ></select>
+    </div>
+
+    
+
+
+
+
+    <input type="submit" value="Snimi" />
+
+
+</form>

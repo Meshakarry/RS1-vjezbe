@@ -1,0 +1,84 @@
+﻿@model studentPrikazVM
+@{ 
+
+}
+
+<form>
+    <input name="q" value="@Model.query"  class="form-control" type="text" placeholder="Pretraga"  style="float:left;width:300px"/>
+    <input type="submit" value="Trazi" class="btn btn-dark" style="float:left;padding:7px 9px;margin:0px 0px 30px 5px;background-color:dodgerblue;color:white;border:none" />
+
+</form>
+
+
+<table class="table">
+
+
+      <thead>
+          <th>ID</th>
+          <th>Ime</th>
+          <th>Prezime</th>
+          <th>Broj indeksa</th>
+          <th>Fakultet</th>
+          <th>Opstina</th>
+       
+    </thead>
+
+    <tbody>
+     
+         @foreach (studentPrikazVM.Row s in Model.studenti)
+         {
+             <tr>
+             <td>@s.studentID</td>
+             <td>@s.Ime</td>
+             <td>@s.Prezime</td>
+             <td>@s.Br_Ind</td>
+             <td>@s.Fakultet</td>
+             <td>@s.Opstina</td>
+                 <td><a href="/Student/Obrisi?studentID=@s.studentID " style="color:firebrick">Obrisi</a></td>
+                 <td><a href="/Student/Edit?studentID=@s.studentID " style="color:gold">Edit</a></td>
+                 <td><a href="#" style="color:greenyellow" onclick="PrikaziDetalje(@s.studentID)">Detalji</a></td>
+                 <td><button onclick="PrikaziDetalje(@s.studentID)">Kurcina klikni</button></td>
+
+              </tr>
+
+         }
+
+     
+        </tbody>
+
+</table>
+
+<button  class="btn btn-danger" style="float:right" onclick="window.location='/Student/Edit'" >Dodaj Studenta</button>
+</br>
+</br>
+
+<div id="ajaxPoziv" style="border:1px solid red">
+    Glupi tekst samo da nesto ima
+
+</div>
+
+<script>
+    var PrikaziDetalje=(studID) =>{
+
+        var url = '/Student/Detalji?studentID=' + studID;
+        //var zahtjev = new XMLHttpRequest();
+        //zahtjev.onload = function () {
+        //    if (zahtjev.status === 200) {
+        //        document.getElementById("ajaxPoziv").innerHTML = zahtjev.responseText;
+        //    }
+        //};
+        //zahtjev.open("GET", url, true);
+
+        //zahtjev.send();
+
+        $.get(url, function (d) {
+            $("#ajaxPoziv").html(d);
+        }
+
+
+        )
+
+
+
+    }
+</script>
