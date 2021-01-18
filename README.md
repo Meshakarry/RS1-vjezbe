@@ -1,1 +1,1 @@
-# RS1-vjezbe
+# Razvoj softvera I vjezba.
