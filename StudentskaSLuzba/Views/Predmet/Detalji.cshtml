@@ -6,7 +6,6 @@
 <table class="table table-striped">
 
     <thead>
-    <th>ID</th>
     <th>Predmet</th>
     <th>Ocjena</th>
     <th>Datum polaganja</th>
@@ -14,10 +13,11 @@
     @foreach (StudentPredmetPrikaz sp in Model)
     {
         <tr>
-            <td>@sp.studentPredmetID</td>
             <td>@sp.NazivPredmeta</td>
             <td>@sp.Ocjena</td>
             <td>@sp.Datum.ToString(format: "dd.MM.yyyy")</td>
+           <td><a href="/Predmet/ObrisiOcjenu?studentPredmetID=@sp.studentPredmetID" style="color:Background">Obrisi me</a></td>
+            <td><button class="btn btn-success" onclick="OtvoriFormu(@sp.studentPredmetID)">Edituj</button></td>
         </tr>
 
 
@@ -26,7 +26,6 @@
 
 </table>
 <button class="btn btn-danger" style="float:right" onclick="window.location='/Predmet/Edit'">Dodaj Predmet</button>
-
 
 
 

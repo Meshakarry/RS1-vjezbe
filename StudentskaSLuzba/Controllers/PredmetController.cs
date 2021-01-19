@@ -52,55 +52,112 @@ namespace StudentskaSLuzba.Controllers
             return Redirect("/Predmet/Prikaz");
         }
 
-        public IActionResult Edit(int predmetStudentID)
+        //public IActionResult Edit(int predmetStudentID)
+        //{
+        //    mojDbContext dbContext = new mojDbContext();
+
+        //    List<SelectListItem> ocjenee = dbContext.ocjenas.Select(a => new SelectListItem { Value = a.ID.ToString(), Text = a.ocjena.ToString() }).ToList();
+        //    List<SelectListItem> studentii = dbContext.students.Select(a => new SelectListItem { Value = a.studentID.ToString(), Text = a.Ime }).ToList();
+        //    List<SelectListItem> predmeti = dbContext.predmets.Select(a => new SelectListItem { Value = a.predmetID.ToString(), Text = a.Naziv }).ToList();
+
+        //    DodajPredmetVM p = predmetStudentID == 0 ? new DodajPredmetVM() :
+        //       dbContext.predmetOcjenas.Where(x => x.ID == predmetStudentID)
+        //       .Select(p => new DodajPredmetVM
+        //       {
+        //           predmetStudentID=p.ID,
+        //           ocjenaID=p.ocjenaID,
+        //           studentID=p.studentID,
+        //           predmetID=p.predmetID,
+        //           Datum=p.datum_polaganja
+                   
+        //       }).Single();
+
+        //    p.ocjene = ocjenee;
+        //    p.studenti = studentii;
+        //    p.predmeti = predmeti;
+        //    return View(p);
+        //}
+
+        //public IActionResult Snimi(DodajPredmetVM s)
+        //{
+        //    mojDbContext dbContext = new mojDbContext();
+        //    PredmetOcjena st;
+
+        //    if (s.predmetStudentID == 0)
+        //    {
+        //        st = new PredmetOcjena();
+        //        dbContext.Add(st);
+
+        //    }
+        //    else
+        //    {
+        //        st = dbContext.predmetOcjenas.Find(s.predmetStudentID);
+        //    }
+        //    st.predmetID = s.predmetID;
+        //    st.ocjenaID = s.ocjenaID;
+        //    st.studentID = s.studentID;
+        //    st.datum_polaganja = s.Datum;
+
+
+        //    dbContext.SaveChanges();
+        //    return Redirect("/Student/Prikaz");
+        //}
+        public IActionResult Detalji(int studentID)
         {
             mojDbContext dbContext = new mojDbContext();
 
-            List<SelectListItem> ocjenee = dbContext.ocjenas.Select(a => new SelectListItem { Value = a.ID.ToString(), Text = a.ocjena.ToString() }).ToList();
-            List<SelectListItem> studentii = dbContext.students.Select(a => new SelectListItem { Value = a.studentID.ToString(), Text = a.Ime }).ToList();
-            List<SelectListItem> predmeti = dbContext.predmets.Select(a => new SelectListItem { Value = a.predmetID.ToString(), Text = a.Naziv }).ToList();
+            var polozeni = dbContext.predmetOcjenas.Where(x => x.studentID == studentID).
+                Select(p => new StudentPredmetPrikaz
+                {
+                    studentPredmetID = p.ID,
+                    NazivPredmeta = p.predmet.Naziv,
+                    Ocjena = p.ocjena.ocjena,
+                    Datum = p.datum_polaganja
+                }).ToList();
 
-            DodajPredmetVM p = predmetStudentID == 0 ? new DodajPredmetVM() :
-               dbContext.predmetOcjenas.Where(x => x.ID == predmetStudentID)
-               .Select(p => new DodajPredmetVM
-               {
-                   predmetStudentID=p.ID,
-                   ocjenaID=p.ocjenaID,
-                   studentID=p.studentID,
-                   predmetID=p.predmetID,
-                   Datum=p.datum_polaganja
-                   
-               }).Single();
-
-            p.ocjene = ocjenee;
-            p.studenti = studentii;
-            p.predmeti = predmeti;
-            return View(p);
+            return View(polozeni);
         }
 
-        public IActionResult Snimi(DodajPredmetVM s)
+        public IActionResult ObrisiOcjenu(int studentPredmetID)
+        {
+            mojDbContext mojDb = new mojDbContext();
+            PredmetOcjena obrisi = mojDb.predmetOcjenas.Find(studentPredmetID);
+
+            mojDb.Remove(obrisi);
+            mojDb.SaveChanges();
+
+            return Redirect("/Student/Prikaz");
+        }
+        public IActionResult Edit(int studentPredmetID)
         {
             mojDbContext dbContext = new mojDbContext();
-            PredmetOcjena st;
 
-            if (s.predmetStudentID == 0)
-            {
-                st = new PredmetOcjena();
-                dbContext.Add(st);
+            List<SelectListItem> ocjene = dbContext.ocjenas.Select(x => new SelectListItem { Value = x.ID.ToString(), Text = x.ocjena.ToString() }).ToList();
+            EditOcjenaVM editOcjena = dbContext.predmetOcjenas.Where(x => x.ID == studentPredmetID).
+                Select(o => new EditOcjenaVM
+                {
+                    studentPredmetID=o.ID,
+                    NazivPredmeta = o.predmet.Naziv,
+                    ImeStudenta=o.student.Ime + " " + o.student.Prezime,
+                    ocjenaID=o.ocjenaID,
+                    
+                }).Single();
+            editOcjena.ocjene = ocjene;
+            return View(editOcjena);
+        }
+        public IActionResult snimi(EditOcjenaVM x)
+        {
+            mojDbContext dbContext = new mojDbContext();
 
-            }
-            else
-            {
-                st = dbContext.predmetOcjenas.Find(s.predmetStudentID);
-            }
-            st.predmetID = s.predmetID;
-            st.ocjenaID = s.ocjenaID;
-            st.studentID = s.studentID;
-            st.datum_polaganja = s.Datum;
+            PredmetOcjena ocjenaa = dbContext.predmetOcjenas.Find(x.studentPredmetID);
 
-
+            ocjenaa.ocjenaID = x.ocjenaID;
             dbContext.SaveChanges();
+
+
             return Redirect("/Student/Prikaz");
+
+
         }
     }
 }

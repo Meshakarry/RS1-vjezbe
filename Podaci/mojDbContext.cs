@@ -12,6 +12,7 @@ namespace Podaci
         public DbSet<Predmet> predmets{ get; set; }
         public DbSet<Ocjena> ocjenas{ get; set; }
         public DbSet<PredmetOcjena> predmetOcjenas{ get; set; }
+        public DbSet<PrisustvoNaNastavi> prisustvoNaNastavis{ get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 

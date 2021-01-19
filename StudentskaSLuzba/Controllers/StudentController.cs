@@ -17,7 +17,7 @@ namespace StudentskaSLuzba.Controllers
             return View();
         }
 
-        public IActionResult Prikaz(string q=null)
+        public IActionResult Prikaz(string q = null)
         {
             mojDbContext mojDb = new mojDbContext();
 
@@ -29,8 +29,8 @@ namespace StudentskaSLuzba.Controllers
                     Ime = a.Ime,
                     Prezime = a.Prezime,
                     Br_Ind = a.Br_Ind,
-                    Fakultet=a.Fakultet.Naziv,
-                    Opstina=a.Opstina.Naziv
+                    Fakultet = a.Fakultet.Naziv,
+                    Opstina = a.Opstina.Naziv
 
                 }).ToList();
             studentPrikazVM s = new studentPrikazVM();
@@ -59,7 +59,7 @@ namespace StudentskaSLuzba.Controllers
             List<SelectListItem> fakulteti = dbContext.fakultets.Select(a => new SelectListItem { Value = a.ID.ToString(), Text = a.Naziv }).ToList();
             List<SelectListItem> opstine = dbContext.opstinas.Select(a => new SelectListItem { Value = a.ID.ToString(), Text = a.Naziv }).ToList();
 
-            DodajStudentaVM s = studentID == 0 ? s = new DodajStudentaVM() : dbContext.students.Where(x=>x.studentID==studentID).
+            DodajStudentaVM s = studentID == 0 ? s = new DodajStudentaVM() : dbContext.students.Where(x => x.studentID == studentID).
                 Select(a => new DodajStudentaVM
                 {
                     studentID = a.studentID,
@@ -74,7 +74,7 @@ namespace StudentskaSLuzba.Controllers
             s.fakulteti = fakulteti;
             s.opstine = opstine;
 
-       
+
             return View(s);
         }
 
@@ -87,11 +87,11 @@ namespace StudentskaSLuzba.Controllers
             {
                 st = new Student();
                 dbContext.Add(st);
-              
+
             }
             else
             {
-                st=dbContext.students.Find(s.studentID);
+                st = dbContext.students.Find(s.studentID);
             }
             st.Ime = s.Ime;
             st.Prezime = s.Prezime;
@@ -105,25 +105,34 @@ namespace StudentskaSLuzba.Controllers
         }
 
 
-    public IActionResult Detalji(int studentID)
-    {
+        
+
+
+
+
+        public IActionResult PrikazPrisustva(int studentID)
+        {
             mojDbContext dbContext = new mojDbContext();
+            var m = new prisustvoPrikazVM();
+            Student s = dbContext.students.Find(studentID);
+            m.NazivStudenta = s.Ime + " " + s.Prezime;
 
-            var polozeni = dbContext.predmetOcjenas.Where(x => x.studentID == studentID).
-                Select(p => new StudentPredmetPrikaz
+            m.prisustva = dbContext.prisustvoNaNastavis.Where(x => x.studentID == studentID).Select(
+                s => new prisustvoPrikazVM.Zapis
                 {
-                    studentPredmetID=p.ID,
-                    NazivPredmeta=p.predmet.Naziv,
-                    Ocjena=p.ocjena.ocjena,
-                    Datum=p.datum_polaganja
-                }).ToList();
+                    
+                    Predmet = s.predmet.Naziv,
+                    datum = s.datum_prisustva
+                }
+                ).ToList();
 
-        return View(polozeni);
+
+
+
+            return View(m);
+        }
     }
-
-
-
-    }
+    
 
 
 

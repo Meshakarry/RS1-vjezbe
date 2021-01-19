@@ -14,13 +14,14 @@
 
 
       <thead>
+          <tr>
           <th>ID</th>
           <th>Ime</th>
           <th>Prezime</th>
           <th>Broj indeksa</th>
           <th>Fakultet</th>
           <th>Opstina</th>
-       
+         </tr>
     </thead>
 
     <tbody>
@@ -36,8 +37,8 @@
              <td>@s.Opstina</td>
                  <td><a href="/Student/Obrisi?studentID=@s.studentID " style="color:firebrick">Obrisi</a></td>
                  <td><a href="/Student/Edit?studentID=@s.studentID " style="color:gold">Edit</a></td>
-                 <td><a href="#" style="color:greenyellow" onclick="PrikaziDetalje(@s.studentID)">Detalji</a></td>
-                 <td><button onclick="PrikaziDetalje(@s.studentID)">Kurcina klikni</button></td>
+                 <td><button style="color:brown" onclick="PrikaziDetalje(@s.studentID)"> Polozeni</button></td>
+                 <td><button style="color:gold" onclick="PrikaziPrisustvo(@s.studentID)">Prisustvo</button></td>
 
               </tr>
 
@@ -49,6 +50,8 @@
 </table>
 
 <button  class="btn btn-danger" style="float:right" onclick="window.location='/Student/Edit'" >Dodaj Studenta</button>
+
+
 </br>
 </br>
 
@@ -60,7 +63,7 @@
 <script>
     var PrikaziDetalje=(studID) =>{
 
-        var url = '/Student/Detalji?studentID=' + studID;
+        var url = '/Predmet/Detalji?studentID=' + studID;
         //var zahtjev = new XMLHttpRequest();
         //zahtjev.onload = function () {
         //    if (zahtjev.status === 200) {
@@ -80,5 +83,33 @@
 
 
 
+    }
+
+
+    function PrikaziPrisustvo(studentID) {
+        var url = "/Student/PrikazPrisustva?studentID=" + studentID;
+
+        $.get(url, function (d) {
+            $("#ajaxPoziv").html(d);
+        });
+    }
+    function OtvoriFormu(studentPredmetID) {
+        var url = "/Predmet/Edit?studentPredmetID=" + studentPredmetID;
+        $.get(url, function (d) {
+            $("#ajaxPoziv").html(d);
+        });
+    }
+    function SnimiOcjenu() {
+        var forma = $("#NovaOcjena");
+        var url = "/Predmet/snimi";
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: forma.serialize(),
+            success: function (d) {
+                $("#ajaxPoziv").html(d);
+            }
+        })
+        alert("Uspjesno snimljeno");
     }
 </script>

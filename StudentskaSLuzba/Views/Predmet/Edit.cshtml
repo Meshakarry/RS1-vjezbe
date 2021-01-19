@@ -1,35 +1,32 @@
-﻿@model DodajPredmetVM
+﻿@model EditOcjenaVM
+@{ 
+    Layout = null;
+}
+<form id="NovaOcjena">
 
-<form asp-action="Snimi" asp-controller="Predmet">
-
-    <div style="display:none">
+    <div >
         <label>ID</label>
         </br>
-        <input asp-for="predmetStudentID" />
+        <input type="hidden" asp-for="studentPredmetID"   />
     </div>
 
     <div>
         <label> Predmeta</label>
         </br>
-        <select asp-for="predmetID" asp-items="@Model.predmeti"></select>
+        <input asp-for="NazivPredmeta" disabled/>
     </div>
     <div>
         <label>Ocjena</label>
         </br>
-        <select asp-for="ocjenaID" asp-items="@Model.ocjene"></select>
+        <select asp-for="ocjenaID" asp-items="Model.ocjene" ></select>
     </div>
     <div>
         <label>Student</label>
         </br>
-        <select asp-for="studentID" asp-items="@Model.studenti"></select>
+        <input asp-for="ImeStudenta" disabled/>
     </div>
-    <div>
-        <label>Datum polaganja</label>
-        </br>
-        <input type="date" asp-for="Datum"/>
-    </div>
+   
 
-
-    <input type="submit" value=" Snimi" />
+    <input type="button" value=" Snimi" onclick="SnimiOcjenu()"/>
 
 </form>

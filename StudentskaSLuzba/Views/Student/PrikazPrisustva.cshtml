@@ -1,0 +1,22 @@
+﻿@model prisustvoPrikazVM
+@{
+    Layout = null;
+}
+ <table class="table table-bordered">
+     <thead>
+         <tr>
+             <th>Naziv Predmeta</th>
+             <th>Datum prisustva</th>
+         </tr>
+     </thead>
+     <tbody>
+      @foreach (var item in Model.prisustva)
+      {
+          <tr>
+              <td>@item.Predmet</td>
+              <td>@item.datum.ToString(format:"dd-MM-yyyy")</td>
+          </tr>
+      }
+
+         </tbody>
+ </table>
