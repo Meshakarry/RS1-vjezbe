@@ -14,6 +14,9 @@ namespace StudentskaSLuzba.Models
 
             public string Predmet { get; set; }
             public DateTime datum { get; set; }
+            public bool IsPrisutan { get; set; }
+            public string komentar { get; set; }
+            public int prisustvoID { get; set; }
 
 
         }

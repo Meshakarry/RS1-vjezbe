@@ -47,6 +47,7 @@ namespace StudentskaSLuzba.Controllers
             Student s = mojDb.students.Find(studentID);
 
             mojDb.Remove(s);
+            
             mojDb.SaveChanges();
 
             return Redirect("/Student/Prikaz");
@@ -110,27 +111,7 @@ namespace StudentskaSLuzba.Controllers
 
 
 
-        public IActionResult PrikazPrisustva(int studentID)
-        {
-            mojDbContext dbContext = new mojDbContext();
-            var m = new prisustvoPrikazVM();
-            Student s = dbContext.students.Find(studentID);
-            m.NazivStudenta = s.Ime + " " + s.Prezime;
-
-            m.prisustva = dbContext.prisustvoNaNastavis.Where(x => x.studentID == studentID).Select(
-                s => new prisustvoPrikazVM.Zapis
-                {
-                    
-                    Predmet = s.predmet.Naziv,
-                    datum = s.datum_prisustva
-                }
-                ).ToList();
-
-
-
-
-            return View(m);
-        }
+       
     }
     
 

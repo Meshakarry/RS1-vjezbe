@@ -1,0 +1,39 @@
+﻿@model EditPrisustvoVM
+@{
+    Layout = null;
+}
+<form id="NovoPrisustvo">
+
+    <div>
+        <label>ID</label>
+        </br>
+        <input type="hidden" asp-for="prisustvoID" />
+    </div>
+
+    <div>
+        <label> Predmeta</label>
+        </br>
+        <input asp-for="NazivPredmeta" disabled />
+    </div>
+
+    <div>
+        <label>Student</label>
+        </br>
+        <input asp-for="ImeStudenta" disabled />
+    </div>
+
+    <div>
+        <label>Prisutnost</label>
+        </br>
+        <input asp-for="IsPrisutan" />
+    </div>
+
+    <div>
+        <label>Komentar</label>
+        </br>
+        <input asp-for="komentar" />
+    </div>
+
+    <input type="button" value=" Snimi" onclick="SnimiPrisustvo()" />
+
+</form>

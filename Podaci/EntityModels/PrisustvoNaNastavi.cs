@@ -13,5 +13,8 @@ namespace Podaci.EntityModels
         public Predmet predmet { get; set; }
 
         public DateTime datum_prisustva { get; set; }
+
+        public bool IsPrisutan { get; set; }
+        public string komentar { get; set; }
     }
 }

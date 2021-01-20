@@ -6,7 +6,10 @@
      <thead>
          <tr>
              <th>Naziv Predmeta</th>
-             <th>Datum prisustva</th>
+             <th>Datum</th>
+             <th>Prisutan</th>
+             <th>Komentar</th>
+             <th>Akcije</th>
          </tr>
      </thead>
      <tbody>
@@ -15,6 +18,11 @@
           <tr>
               <td>@item.Predmet</td>
               <td>@item.datum.ToString(format:"dd-MM-yyyy")</td>
+              <td>@(item.IsPrisutan?"DA":"NE")</td>
+              <td>@item.komentar</td>
+              <td>
+                  <button class="btn btn-outline-success" onclick="EditPrisustvo(@item.prisustvoID)">Edit</button>
+              </td>
           </tr>
       }
 

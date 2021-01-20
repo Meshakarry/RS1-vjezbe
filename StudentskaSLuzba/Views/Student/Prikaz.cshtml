@@ -87,7 +87,7 @@
 
 
     function PrikaziPrisustvo(studentID) {
-        var url = "/Student/PrikazPrisustva?studentID=" + studentID;
+        var url = "/Prisustvo/PrikazPrisustva?studentID=" + studentID;
 
         $.get(url, function (d) {
             $("#ajaxPoziv").html(d);
@@ -102,6 +102,28 @@
     function SnimiOcjenu() {
         var forma = $("#NovaOcjena");
         var url = "/Predmet/snimi";
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: forma.serialize(),
+            success: function (d) {
+                $("#ajaxPoziv").html(d);
+            }
+        })
+        alert("Uspjesno snimljeno");
+    }
+
+    function EditPrisustvo(prisustvoID) {
+        var url = "/Prisustvo/EditPrisustvo?prisustvoID=" + prisustvoID;
+        $.get(url, function (d) {
+
+        $("#ajaxPoziv").html(d);
+        })
+    }
+    function SnimiPrisustvo() {
+        var forma = $("#NovoPrisustvo");
+
+        var url = "/Prisustvo/snimi";
         $.ajax({
             type: "POST",
             url: url,
